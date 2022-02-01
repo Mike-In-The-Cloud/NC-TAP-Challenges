@@ -19,14 +19,11 @@ digit () {
         (grey)      echo 8;;
         (white)     echo 9;;
         (*)
-            echo "invalid colour" >&2
+            echo "invalid colour $1" >&2
             return 1
             ''
     esac
 }
-
-# call to function
-d1=$(digit "$1") && d2=$(digit "$2")|| exit 1
 
 
 # function to assign the correct unit to the resistor
@@ -44,14 +41,25 @@ sufix () {
         (grey)      echo "Statohms";;
         (white)     echo "Abohms";;
         (*)
-            echo "invalid colour" >&2
+            echo "invalid colour $1" >&2
             return 1
             ''
     esac
 }
 
+# Get user input
+echo -n "Enter Three Colours from the resistor (seperated by a space): "
+read d1 d2 s1
+
+# a little dirty but it works, needs a more elegant solution
+d1=$(echo $d1 | tr '[:upper:]' '[:lower:]')
+d2=$(echo $d2 | tr '[:upper:]' '[:lower:]')
+s1=$(echo $s1 | tr '[:upper:]' '[:lower:]')
+
+# call to function
+d1=$(digit "$d1") && d2=$(digit "$d2")|| exit 1
 # call to suffix 
-s1=$(sufix "$3") || exit 1
+s1=$(sufix "$s1") || exit 1
 
 # print result
 echo "The value of this resistor is: ${d1}${d2} ${s1}"
