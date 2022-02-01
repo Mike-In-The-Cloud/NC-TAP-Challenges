@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Resistor Colour Trio challange
+
+# This solution uses command line input
+
+# function to swtich variable to corrisponding int
+digit () {
+    # bash switch statement
+    case $1 in 
+        (black)     echo 0;;
+        (brown)     echo 1;;
+        (red)       echo 2;;
+        (orange)    echo 3;;
+        (yellow)    echo 4;;
+        (green)     echo 5;;
+        (blue)      echo 6;;
+        (violet)    echo 7;;
+        (grey)      echo 8;;
+        (white)     echo 9;;
+        (*)
+            echo "invalid colour" >&2
+            return 1
+            ''
+    esac
+}
+
+# call to function
+d1=$(digit "$1") && d2=$(digit "$2")|| exit 1
+
+
+# function to assign the correct unit to the resistor
+sufix () {
+    # bash switch statement
+    case $1 in 
+        (black)     echo "ohms";;
+        (brown)     echo "ohms";;
+        (red)       echo "ohms";;
+        (orange)    echo "Kiloohms";;
+        (yellow)    echo "Kiloohms";;
+        (green)     echo "Megaohms";;
+        (blue)      echo "Megaohms";;
+        (violet)    echo "Statohms";;
+        (grey)      echo "Statohms";;
+        (white)     echo "Abohms";;
+        (*)
+            echo "invalid colour" >&2
+            return 1
+            ''
+    esac
+}
+
+# call to suffix 
+s1=$(sufix "$3") || exit 1
+
+# print result
+echo "The value of this resistor is: ${d1}${d2} ${s1}"
